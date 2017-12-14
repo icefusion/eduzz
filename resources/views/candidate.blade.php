@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Eduzz - Listagem de Candidatos</title>
-    <meta id="token" name="token" value="{{ csrf_token() }}">
+    <title>Eduzz - Listagem de Candidatos</title>    
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css">
 </head>
 <body>

@@ -8,9 +8,37 @@ use Illuminate\Http\Request;
  
 class CandidateController extends Controller{
 
-    public function manageVue()
-    {
-        return view('candidate');
+    public function createCandidate(Request $request){
+ 
+        $candidate = Candidate::create($request->all());
+ 
+        return response()->json($candidate);
+ 
+    }
+ 
+    public function updateCandidate(Request $request, $id){
+
+        $candidate  = Candidate::find($id);
+        $candidate->name = $request->input('name');
+        $candidate->email = $request->input('email');        
+        $candidate->save();
+ 
+        return response()->json($candidate);
+    }  
+
+    public function deleteCandidate($id){
+        $candidate  = Candidate::find($id);
+        $candidate->delete();
+ 
+        return response()->json('Removed successfully.');
+    }
+
+    public function index(){
+ 
+        $candidates  = Candidate::all();
+ 
+        return response()->json($candidates);
+ 
     }
 
     /**
@@ -18,9 +46,9 @@ class CandidateController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function list(Request $request)
     {
-        $items = Candidate::latest('id')->paginate(5);
+        $items = Candidate::orderBy('id','asc')->paginate(3);
 
         $response = [
             'pagination' => [
@@ -35,54 +63,5 @@ class CandidateController extends Controller{
         ];
 
         return response()->json($response);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-        ]);
-
-        $create = Candidate::create($request->all());
-
-        return response()->json($create);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-        ]);
-
-        $edit = Candidate::find($id)->update($request->all());
-
-        return response()->json($edit);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        Candidate::find($id)->delete();
-        return response()->json(['done']);
     }
 }

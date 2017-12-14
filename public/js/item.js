@@ -1,5 +1,3 @@
-Vue.http.headers.common['X-CSRF-TOKEN'] = $("#token").attr("value");
-
 new Vue({
 
     el: '#manage-vue',
@@ -59,7 +57,7 @@ new Vue({
     methods: {
 
         getVueItems: function(page) {
-            this.$http.get('/candidate?page=' + page).then((response) => {
+            this.$http.get('/api/v1/candidates?page=' + page).then((response) => {                
                 this.$set('items', response.data.data.data);
                 this.$set('pagination', response.data.pagination);
             });
@@ -67,7 +65,7 @@ new Vue({
 
         createItem: function() {
             var input = this.newItem;
-            this.$http.post('/candidate', input).then((response) => {
+            this.$http.post('/api/v1/candidate', input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.newItem = {
                     'name': '',
@@ -83,7 +81,7 @@ new Vue({
         },
 
         deleteItem: function(item) {
-            this.$http.delete('/candidate/' + item.id).then((response) => {
+            this.$http.delete('/api/v1/candidate/' + item.id).then((response) => {
                 this.changePage(this.pagination.current_page);
                 toastr.success('Candidato Excluído com Sucesso.', 'Success Alert', {
                     timeOut: 5000
@@ -100,7 +98,7 @@ new Vue({
 
         updateItem: function(id) {
             var input = this.fillItem;
-            this.$http.put('/candidate/' + id, input).then((response) => {
+            this.$http.put('/api/v1/candidate/' + id, input).then((response) => {
                 this.changePage(this.pagination.current_page);
                 this.fillItem = {
                     'name': '',
