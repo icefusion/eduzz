@@ -8,5 +8,11 @@ $router->group(['prefix' => 'api/v1'], function($router)
  	 
 	$router->delete('candidate/{id}','CandidateController@deleteCandidate');
 
+	$router->get('candidates','CandidateController@list');
+
 	$router->get('candidate','CandidateController@index');
+});
+
+$router->get('/', function ()  {
+     return view('candidate');
 });

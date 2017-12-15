@@ -48,7 +48,7 @@ class CandidateController extends Controller{
      */
     public function list(Request $request)
     {
-        $items = Candidate::orderBy('id','asc')->paginate(3);
+        $items = Candidate::orderBy('id','asc')->paginate(5);
 
         $response = [
             'pagination' => [
